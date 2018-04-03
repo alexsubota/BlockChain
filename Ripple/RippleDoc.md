@@ -198,7 +198,7 @@ Response:
   ]
 }
 
-##Get Ledger Validation
+#####Get Ledger Validation
 Retrieve a validation vote recorded for a specific ledger hash by a specific validator. This dataset includes ledger versions that are outside the validated ledger chain.
 `GET /v2/ledgers/{:ledger_hash}/validations/{:pubkey}`
 
@@ -221,3 +221,222 @@ Response:
   "validation_public_key": "n949f75evCHwgyP4fPVgaHqNHxUVN15PsJEZ3B3HnXPcPjcZAoy7",
   "result": "success"
 }
+
+#####Get Transaction
+Retrieve a specific transaction by its identifying hash.
+`GET /v2/transactions/{:hash}`
+
+This method requires the following URL parameters:
+
+|Field	|Value	|Description|
+|--|--|--|
+|hash	|String - Hash	|The identifying hash of the transaction.|
+
+A successful response uses the HTTP code 200 OK and has a JSON body with the following:
+
+|Field	|Value	|Description|
+|--|--|--|
+|result	|String	|The value success indicates that this is a successful response.|
+|transaction	|Transaction object	|The requested transaction.|
+
+Response
+200 OK
+{
+    "result": "success",
+    "transaction": {
+        "ledger_index": 8317037,
+        "date": "2014-08-14T20:22:20+00:00",
+        "hash": "03EDF724397D2DEE70E49D512AECD619E9EA536BE6CFD48ED167AE2596055C9A",
+        "tx": {
+            "TransactionType": "OfferCreate",
+            "Flags": 131072,
+            "Sequence": 159244,
+            "TakerPays": {
+                "value": "0.001567373",
+                "currency": "BTC",
+                "issuer": "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B"
+            },
+            "TakerGets": "146348921",
+            "Fee": "64",
+            "SigningPubKey": "02279DDA900BC53575FC5DFA217113A5B21C1ACB2BB2AEFDD60EA478A074E9E264",
+            "TxnSignature": "3045022100D81FFECC36A3DEF0922EB5D16F1AA5AA0804C30A18ED3B512093A75E87C81AD602206B221E22A4E3158785C109E7508624AD3DE5C0E06108D34FA709FCC9575C9441",
+            "Account": "r2d2iZiCcJmNL6vhUGFjs8U8BuUq6BnmT"
+        },
+        "meta": {
+            "TransactionIndex": 0,
+            "AffectedNodes": [
+                {
+                    "ModifiedNode": {
+                        "LedgerEntryType": "AccountRoot",
+                        "PreviousTxnLgrSeq": 8317036,
+                        "PreviousTxnID": "A56793D47925BED682BFF754806121E3C0281E63C24B62ADF7078EF86CC2AA53",
+                        "LedgerIndex": "2880A9B4FB90A306B576C2D532BFE390AB3904642647DCF739492AA244EF46D1",
+                        "PreviousFields": {
+                            "Balance": "275716601760"
+                        },
+                        "FinalFields": {
+                            "Flags": 0,
+                            "Sequence": 326323,
+                            "OwnerCount": 27,
+                            "Balance": "275862935331",
+                            "Account": "rfCFLzNJYvvnoGHWQYACmJpTgkLUaugLEw",
+                            "RegularKey": "rfYqosNivHQFJ6KpArouxoci3QE3huKNYe"
+                        }
+                    }
+                },
+            ],
+            "TransactionResult": "tesSUCCESS"
+        }
+    }
+}
+
+#####Get Transactions
+Retrieve transactions by time
+`GET /v2/transactions/`
+
+Optionally, you can provide the following query parameters:
+
+|Field	|Value	|Description|
+|--|--|--|
+|start	|String - Timestamp	|Filter results to this time and later.|
+|end	|String - Timestamp	|Filter results to this time and earlier.|
+|descending	|Boolean	|If true, return results in reverse chronological order. Defaults to false.|
+|type	|String	|Filter transactions to a specific transaction type.|
+|result	|String	|Filter transactions for a specific transaction result.|
+|binary	|Boolean	|If true, return transactions in binary form. Defaults to false.|
+|limit	|Integer	|Maximum results per page. Defaults to 20. Cannot be more than 100.|
+|marker	|String	|Pagination marker from a previous response.|
+
+A successful response uses the HTTP code 200 OK and has a JSON body with the following:
+
+|Field	|Value	|Description|
+|--|--|--|
+|result	|String	|The value success indicates that this is a successful response.|
+|count	|Integer	|Number of Transactions returned.|
+|marker	|String	(May be omitted) |Pagination marker.|
+|transactions	|Array of Transaction object	|The requested transactions.|
+
+Response
+200 OK
+{
+  "result": "success",
+  "count": 2,
+  "marker": "20130106022000|000000053869|00000",
+  "transactions": [
+    {
+      "hash": "B8E4335A94438EC8209135A4E861A4C88F988C651B819DDAF2E8C55F9B41E589",
+      "date": "2013-01-02T20:13:40+00:00",
+      "ledger_index": 40752,
+      "ledger_hash": "55A900C2BA9483DC83F8FC065DE7789570662365BDE98EB75C5F4CE4F9B43214",
+      "tx": {
+        "TransactionType": "Payment",
+        "Flags": 0,
+        "Sequence": 61,
+        "Amount": {
+          "value": "96",
+          "currency": "USD",
+          "issuer": "rJ6VE6L87yaVmdyxa9jZFXSAdEFSoTGPbE"
+        },
+        "Fee": "10",
+        "SigningPubKey": "02082622E4DA1DC6EA6B38A48956D816881E000ACF0C5F5B52863B9F698799D474",
+        "TxnSignature": "304402200A0746192EBC7BC3C1B9D657F42B6345A49D75FE23EF340CB6F0427254C139D00220446BF9169C94AEDC87F56D01DB011866E2A67E2AADDCC45C4D11422550D044CB",
+        "Account": "rB5TihdPbKgMrkFqrqUC3yLdE8hhv4BdeY",
+        "Destination": "rJ6VE6L87yaVmdyxa9jZFXSAdEFSoTGPbE"
+      },
+      "meta": {
+        "TransactionIndex": 0,
+        "AffectedNodes": [
+          {
+            "ModifiedNode": {
+              "LedgerEntryType": "AccountRoot",
+              "PreviousTxnLgrSeq": 40212,
+              "PreviousTxnID": "F491DC8B5E51045D4420297293199039D5AE1EA0C6D62CAD9A973E3C89E40CD6",
+              "LedgerIndex": "9B242A0D59328CE964FFFBFF7D3BBF8B024F9CB1A212923727B42F24ADC93930",
+              "PreviousFields": {
+                "Sequence": 61,
+                "Balance": "8178999999999400"
+              },
+              "FinalFields": {
+                "Flags": 0,
+                "Sequence": 62,
+                "OwnerCount": 6,
+                "Balance": "8178999999999390",
+                "Account": "rB5TihdPbKgMrkFqrqUC3yLdE8hhv4BdeY"
+              }
+            }
+          }
+        ],
+        "TransactionResult": "tecPATH_DRY"
+      }
+    },
+    {
+      "hash": "1E1C14BF5E61682F3DC9D035D9908816497B8E8843E05C0EE98E06DFDDDAE920",
+      "date": "2013-01-05T08:43:10+00:00",
+      "ledger_index": 51819,
+      "ledger_hash": "88ED10E4E31FC7580285CF173B264690B0E8688A3FC9F5F9C62F1A295B96269D",
+      "tx": {
+        "TransactionType": "Payment",
+        "Flags": 0,
+        "Sequence": 10,
+        "Amount": {
+          "value": "2",
+          "currency": "EUR",
+          "issuer": "rfitr7nL7MX85LLKJce7E3ATQjSiyUPDfj"
+        },
+        "Fee": "10",
+        "SigningPubKey": "03FDDCD97668B686100E60653FD1E5210A8310616669AACB3A1FCC6D2C090CCB32",
+        "TxnSignature": "304402204F9BB7E37C14A3A3762E2A7DADB9A28D1AFFB3797521229B6FB98BA666B5491B02204F69AAEAFAC8FA473E52042FF06035AB3618A54E0B76C9852766D55184E98598",
+        "Account": "rhdAw3LiEfWWmSrbnZG3udsN7PoWKT56Qo",
+        "Destination": "rfitr7nL7MX85LLKJce7E3ATQjSiyUPDfj"
+      },
+      "meta": {
+        "TransactionIndex": 0,
+        "AffectedNodes": [
+          {
+            "ModifiedNode": {
+              "LedgerEntryType": "AccountRoot",
+              "PreviousTxnLgrSeq": 51814,
+              "PreviousTxnID": "5EC1C179996BD87E2EB11FE60A37ADD0FB2229ADC7D13B204FAB04FABED8A38D",
+              "LedgerIndex": "AC1B67084F84839A3158A4E38618218BF9016047B1EE435AECD4B02226AB2105",
+              "PreviousFields": {
+                "Sequence": 10,
+                "Balance": "10000999910"
+              },
+              "FinalFields": {
+                "Flags": 0,
+                "Sequence": 11,
+                "OwnerCount": 2,
+                "Balance": "10000999900",
+                "Account": "rhdAw3LiEfWWmSrbnZG3udsN7PoWKT56Qo"
+              }
+            }
+          }
+        ],
+        "TransactionResult": "tecPATH_DRY"
+      }
+    }
+  ]
+}
+
+#####Get Payments
+Retrieve Payments over time, where Payments are defined as Payment type transactions where the sender of the transaction is not also the destination.
+`GET /v2/payments/`
+`GET /v2/payments/{:currency}`
+
+This method uses the following URL parameters:
+
+|Field	|Value	|Description|
+|--|--|--|
+|:currency	|String	(Optional) |Currency code, followed by + and a counterparty address. (Or XRP with no counterparty.) If omitted, return payments for all currencies.|
+
+Optionally, you can provide the following query parameters:
+
+|Field	|Value	|Description|
+|--|--|--|
+|start	|String - Timestamp	|Filter results to this time and later.|
+|end	|String - Timestamp	|Filter results to this time and earlier.|
+|interval	|String	|If provided and currency is also specified, return results aggregated into intervals of the specified length instead of individual payments. Valid intervals are day, week, or month.|
+|descending	|Boolean |If true, return results in reverse chronological order. Defaults to false.|
+|limit	|Integer	|Maximum results per page. Defaults to 200. Cannot be more than 1000.|
+|marker	|String	|Pagination key from previously returned response.|
+|format	|String	|Format of returned results: csv or json. Defaults to json.|
