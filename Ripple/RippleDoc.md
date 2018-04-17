@@ -9,7 +9,7 @@
 
 ## Introduction
 
-The Ripple Data API v2 provides access to information about changes in the XRP Ledger, including transaction history and processed analytical data. This information is stored in a dedicated database, which frees rippled servers to keep fewer historical ledger versions.
+The Ripple Data API provides access to information about changes in the XRP Ledger, including transaction history and processed analytical data. This information is stored in a dedicated database, which frees rippled servers to keep fewer historical ledger versions.
 
 Ripple provides a live instance of the Data API with as complete a transaction record as possible at the following address:
 
@@ -2070,4 +2070,5 @@ If the request specifies verbose=true in the query parameters, the response body
 message	String	Description of the reason for a non-zero score, if applicable.|
 
 ## How to use Drain
-Later!!!
+1. Config contants at LedgerRipple.py and ElasticRipple.py
+1. Start DrainRipple.py from cmd
