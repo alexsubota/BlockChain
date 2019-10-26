@@ -35,6 +35,8 @@ Parts of ledger:
    2. A transaction tree - The **transactions** that were applied to the previous ledger to make this one. Transactions are the only way to change the ledger.
    3. A state tree - All the **ledger** objects that contain the settings, balances, and objects in the ledger as of this version
 
+![](images/ledger-process.png?raw=true)
+
 ##### Header of ledger
 
 | <center>Field          | <center>Type    | <center>Description |
